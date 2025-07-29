@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DajuBahiniRealEstate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Daju<span>Bahini</span>RealEstate</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-section="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-section="properties" id="properties-link">Properties</a></li>
+                    <li><a href="#" class="nav-link" data-section="add-property" id="add-property-link">Add Property</a></li>
+                    <li><a href="#" class="nav-link" data-section="profile" id="profile-link">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons" id="auth-buttons">
+                <button class="btn btn-outline" id="login-btn">Login</button>
+                <button class="btn btn-primary" id="signup-btn">Sign Up</button>
+            </div>
+            <div class="user-menu" id="user-menu" style="display: none;">
+                <div class="user-avatar" id="user-avatar">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="User" id="avatar-img">
+                </div>
+                <div class="dropdown-content" id="dropdown-content">
+                    <a href="#" data-section="profile">My Profile</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="toggle-theme">Dark Mode</button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="#" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-section="properties" id="mobile-properties-link">Properties</a></li>
+                <li><a href="#" class="nav-link" data-section="add-property" id="mobile-add-property-link">Add Property</a></li>
+                <li><a href="#" class="nav-link" data-section="profile" id="mobile-profile-link">Profile</a></li>
+                <li class="auth-mobile" id="auth-mobile">
+                    <button class="btn btn-outline" id="mobile-login-btn">Login</button>
+                    <button class="btn btn-primary" id="mobile-signup-btn">Sign Up</button>
+                </li>
+                <li class="user-mobile" id="user-mobile" style="display: none;">
+                    <a href="#" data-section="profile">My Profile</a>
+                    <a href="#" id="mobile-logout-btn">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Home Section -->
+        <section id="home-section" class="section active">
+            <div class="hero">
+                <div class="container">
+                    <h2>Find Your Dream Home Today</h2>
+                    <p>Discover the perfect property that matches your lifestyle</p>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Search by location, property type..." autocomplete="off">
+                        <button class="btn btn-primary" id="search-btn">Search</button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+
+            <div class="properties">
+                <div class="container">
+                    <div class="section-header">
+                        <h3>Featured Properties</h3>
+                        <button id="view-all-properties" class="btn btn-primary">View All Properties</button>
+                    </div>
+                    <div class="properties-grid" id="featured-properties-container">
+                        <!-- Featured properties will be loaded here (max 3) -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties Section -->
+        <section id="properties-section" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h3>All Properties</h3>
+                    <button id="sort-price" class="btn btn-secondary">Sort by Price</button>
+                </div>
+                <div class="properties-grid" id="all-properties-container">
+                    <!-- All properties will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Property Section -->
+        <section id="add-property-section" class="section">
+            <div class="container">
+                <div class="form-container">
+                    <h2>Add New Property</h2>
+                    <form id="property-form">
+                        <div class="form-group">
+                            <label for="property-title">Title</label>
+                            <input type="text" id="property-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="property-location">Location</label>
+                            <input type="text" id="property-location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="property-type-select">Type</label>
+                            <select id="property-type-select" required>
+                                <option value="land">Land</option>
+                                <option value="housing">Housing</option>
+                                <option value="hotel">Hotel</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="property-bedrooms">Bedrooms (optional)</label>
+                                <input type="number" id="property-bedrooms" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="property-bathrooms">Bathrooms (optional)</label>
+                                <input type="number" id="property-bathrooms" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="property-area">Area (aana)</label>
+                            <input type="number" id="property-area" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="property-price">Price ($)</label>
+                            <input type="number" id="property-price" min="10000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="property-description">Description</label>
+                            <textarea id="property-description" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Images (Drag & Drop or Click to Browse)</label>
+                            <div class="dropzone" id="property-image-upload">
+                                <div class="dz-message">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Drop files here or click to upload</p>
+                                </div>
+                            </div>
+                            <div class="image-preview" id="image-preview"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Property</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="section">
+            <div class="container">
+                <div class="profile-container">
+                    <h2>My Profile</h2>
+                    <div class="profile-content">
+                        <div class="profile-sidebar">
+                            <div class="avatar-upload">
+                                <div class="avatar-preview" id="avatar-preview">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="Profile" id="profile-avatar">
+                                </div>
+                                <div class="avatar-edit">
+                                    <input type="file" id="avatar-upload" accept=".png, .jpg, .jpeg">
+                                    <label for="avatar-upload"><i class="fas fa-pencil-alt"></i></label>
+                                </div>
+                            </div>
+                            <h3 id="profile-name">John Doe</h3>
+                            <p id="profile-email">john@example.com</p>
+                        </div>
+                        <div class="profile-details">
+                            <form id="profile-form">
+                                <div class="form-group">
+                                    <label for="profile-firstname">First Name</label>
+                                    <input type="text" id="profile-firstname" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-lastname">Last Name</label>
+                                    <input type="text" id="profile-lastname" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-phone">Phone Number</label>
+                                    <input type="tel" id="profile-phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-bio">Bio</label>
+                                    <textarea id="profile-bio" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </form>
+                            <div class="my-properties">
+                                <h3>My Properties</h3>
+                                <div class="properties-grid" id="user-properties-container">
+                                    <!-- User properties will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auth Modals -->
+        <div id="login-modal" class="modal auth-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p class="auth-switch">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+                </form>
+            </div>
+        </div>
+
+        <div id="signup-modal" class="modal auth-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Sign Up</h2>
+                <form id="signup-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="signup-firstname">First Name</label>
+                            <input type="text" id="signup-firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-lastname">Last Name</label>
+                            <input type="text" id="signup-lastname" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <p class="auth-switch">Already have an account? <a href="#" id="show-login">Login</a></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Property Details Modal -->
+        <div id="property-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="modal-content">
+                    <!-- Property details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>DajuBahiniRealEstate</h4>
+                    <p>Finding your dream home made simple and efficient with our modern platform.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-section="properties">Properties</a></li>
+                        <li><a href="#" class="nav-link" data-section="add-property">Add Property</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>123 Estate Avenue<br>New York, NY 10001</p>
+                    <p>info@dajubahinirealestate.com</p>
+                    <p>(555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 DajuBahiniRealEstate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
